@@ -1,25 +1,165 @@
-.App {
-  text-align: center;
+.calculator {
+  width: 200px;
+  height: 350px;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+}
+
+.screen {
+  padding: 24px 0 12px 0;
+  width: 100%;
+  color: #fff;
+  font-size: 48px;
+  text-align: right;
+}
+
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: 
+    "clear invert percent divide"
+    "seven eight nine multiply"
+    "four five six minus"
+    "one two three plus"
+    "zero zero dot evaluate";
+  grid-gap: 7px;
+}
+
+
+.button {
+  background-color: #444;
+  height: 45px;
+  width: 100%;
+  border-radius: 25px;
+}
+
+.operator {
+  background-color: orange;
+}
+
+.option {
+  background-color: #aaa;
+}
+
+.option .symbol {
+  color: #000;
+}
+
+.centerize {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.symbol {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+
+.clear {
+  grid-area: clear;
+}
+
+.invert {
+  grid-area: invert;
+}
+
+.percent {
+  grid-area: percent;
+}
+
+.divide {
+  grid-area: divide;
+}
+
+.percent {
+  grid-area: percent;
+}
+
+.seven {
+  grid-area: seven;
+}
+
+.eight {
+  grid-area: eight;
+}
+
+.nine {
+  grid-area: nine;
+}
+
+.multiply {
+  grid-area: multiply;
+}
+
+.four {
+  grid-area: four;
+}
+
+.five {
+  grid-area: five;
+}
+
+.six {
+  grid-area: six;
+}
+
+.minus {
+  grid-area: minus;
+}
+
+.one {
+  grid-area: one;
+}
+
+.two {
+  grid-area: two;
+}
+
+.three {
+  grid-area: three;
+}
+
+.plus {
+  grid-area: plus;
+}
+
+.zero {
+  grid-area: zero;
+}
+
+.dot {
+  grid-area: dot;
+}
+
+.evaluate {
+  grid-area: evaluate;
 }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+  height: 20vmin;
 }
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
 }
 
 @keyframes App-logo-spin {
