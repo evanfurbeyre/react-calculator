@@ -11,6 +11,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
         </header>
         <Calculator />
+        <span>Learn React</span>
       </div>
     );
   }

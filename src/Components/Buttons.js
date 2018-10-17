@@ -6,7 +6,9 @@ export default class Buttons extends Component {
     super(props);
 
     this.state = { 
-      digits: []
+      digits: [],
+      operators: [],
+      options: []
     };
   }
 
@@ -40,8 +42,8 @@ export default class Buttons extends Component {
     })
   }
 
-  handleClick(num){
-    this.props.onClick(num);
+  handleClick(value, name, type){
+    this.props.onClick(value, name, type);
   }
 
   render() {
