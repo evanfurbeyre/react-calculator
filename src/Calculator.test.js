@@ -8,91 +8,128 @@ test('renders without crashing', () => {
 });
 
 
-test('click 1', () => {
+test('1', () => {
   const calc = mount(
       <Calculator />
-  );
-  
-  calc.find('.one').simulate('click');
-  
-  expect(calc.find('.screen').prop('children')).toEqual(1);
-
+  ); 
+  calc.find('.one').simulate('click'); 
+  expect(calc.find('.screen').prop('children')).toEqual('1');
   calc.unmount();
 });
 
-
-test('1 + 1', () => {
+test('12', () => {
   const calc = mount(
       <Calculator />
   );
-  
+  calc.find('.one').simulate('click');
+  calc.find('.two').simulate('click');
+  expect(calc.find('.screen').prop('children')).toEqual('12');
+  calc.unmount();
+});
+
+test('1 +', () => {
+  const calc = mount(
+      <Calculator />
+  );
   calc.find('.one').simulate('click');
   calc.find('.plus').simulate('click');
-  calc.find('.one').simulate('click');
-  calc.find('.evaluate').simulate('click');
-
-  
-  expect(calc.find('.screen').prop('children')).toEqual(2);
+  expect(calc.find('.screen').prop('children')).toEqual('1');
   calc.unmount();
 });
 
 
-test('9 - 4', () => {
+
+test('1 + 2', () => {
+  const calc = mount(
+      <Calculator />
+  );  
+  calc.find('.one').simulate('click');
+  calc.find('.plus').simulate('click');
+  calc.find('.two').simulate('click');  
+  expect(calc.find('.screen').prop('children')).toEqual('2');
+  calc.unmount();
+});
+
+test('1 + 2 +', () => {
+  const calc = mount(
+      <Calculator />
+  );  
+  calc.find('.one').simulate('click');
+  calc.find('.plus').simulate('click');
+  calc.find('.two').simulate('click');  
+  calc.find('.plus').simulate('click');  
+
+  expect(calc.find('.screen').prop('children')).toEqual('3');
+  calc.unmount();
+});
+
+
+test('9 - 4 - ', () => {
   const calc = mount(
       <Calculator />
   );
-  
   calc.find('.nine').simulate('click');
   calc.find('.minus').simulate('click');
   calc.find('.four').simulate('click');
   calc.find('.evaluate').simulate('click');
-
-  expect(calc.find('.screen').prop('children')).toEqual(5);
+  expect(calc.find('.screen').prop('children')).toEqual('5');
   calc.unmount();
 });
 
-test('7 x 5', () => {
+test('7 x 5 =', () => {
   const calc = mount(
       <Calculator />
   );
-  
   calc.find('.seven').simulate('click');
   calc.find('.multiply').simulate('click');
   calc.find('.five').simulate('click');
   calc.find('.evaluate').simulate('click');
-
-  expect(calc.find('.screen').prop('children')).toEqual(35);
+  expect(calc.find('.screen').prop('children')).toEqual('35');
   calc.unmount();
 });
 
-test('7 x 16', () => {
+
+test('1 + 4 - 2', () => {
   const calc = mount(
       <Calculator />
   );
-  
-  calc.find('.seven').simulate('click');
-  calc.find('.multiply').simulate('click');
-  calc.find('.one').simulate('click');
-  calc.find('.six').simulate('click');
-  calc.find('.evaluate').simulate('click');
-
-  expect(calc.find('.screen').prop('children')).toEqual(112);
-  calc.unmount();
-});
-
-test('1 + 1 + 1', () => {
-  const calc = mount(
-      <Calculator />
-  );
-  
   calc.find('.one').simulate('click');
   calc.find('.plus').simulate('click');
   calc.find('.one').simulate('click');
   calc.find('.plus').simulate('click');
   calc.find('.one').simulate('click');
   calc.find('.evaluate').simulate('click');
+  expect(calc.find('.screen').prop('children')).toEqual('3');
+  calc.unmount();
+});
 
-  
-  expect(calc.find('.screen').prop('children')).toEqual(3);
+test('4 *-1', () => {
+  const calc = mount(
+      <Calculator />
+  );
+  calc.find('.four').simulate('click');
+  calc.find('.invert').simulate('click');
+  expect(calc.find('.screen').prop('children')).toEqual('-4');
+  calc.unmount();
+});
+
+test('4 %', () => {
+  const calc = mount(
+      <Calculator />
+  );
+  calc.find('.four').simulate('click');
+  calc.find('.percent').simulate('click');
+  expect(calc.find('.screen').prop('children')).toEqual('0.04');
+  calc.unmount();
+});
+
+test('1 + +', () => {
+  const calc = mount(
+      <Calculator />
+  );
+  calc.find('.one').simulate('click');
+  calc.find('.plus').simulate('click');
+  calc.find('.plus').simulate('click');
+  expect(calc.find('.screen').prop('children')).toEqual('1');
   calc.unmount();
 });

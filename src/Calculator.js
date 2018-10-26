@@ -6,10 +6,12 @@ export default class Calculator extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {  
+    this.state = { 
+      memory: 0,
+      curOp: null,
+      prevOp: null,
       screen: 0,
-      result: 0,
-      curOper: null
+      screenStr: '0'
     };
   }
 
@@ -26,80 +28,101 @@ export default class Calculator extends Component {
     }
 
     this.setState({
-      screen: parseFloat(data.screen),
-      result: data.result,
-      curOper: data.curOper
+      screenStr: data.screenStr,
+      screen: data.screen,
+      memory: data.memory,
+      curOp: data.curOp,
+      prevOp: data.prevOp
     })
   }
 
   handleDigit(data) {
-    console.log("handling digit")
-    let {curOper, value, screen, result} = data;
-    if (!curOper) {
-      data.screen = parseFloat("" + screen + value);
-    } else {
-      data.screen = parseFloat(value);
-      data.result = result + value;
-      data.curOper = null;
+    let { screenStr, value, curOp, prevOp } = data;
+
+    // If the last button was an operation, set the screen to be value and move the curOp to prevOp
+    if (curOp) {
+      screenStr = value;
+      prevOp = curOp;
+      curOp = null;
+
+    // Else don't reset, instead build the string
+    } else { 
+      screenStr += value;
     }
+
+    data.screenStr = screenStr.replace(/^0+/, '');
+    data.curOp = curOp;
+    data.prevOp = prevOp;
   }
 
   handleOperator(data) {
-    console.log("handling op")
+    let { screenStr, curOp, prevOp, name, memory, screen } = data;
 
-    let {curOper, name, result, screen} = data;
+    // Set the current operation
+    curOp = name;
 
-    if (!curOper) {
-      curOper = name;
-      result = parseFloat(screen);
-    } else {
-      if (curOper === "plus") {
-        result += parseFloat(screen);
-      } else if (curOper === "minus") {
-        result -= parseFloat(screen);
-      } else if (curOper === "multiply") {
-        result *= parseFloat(screen);
-      } else if (curOper === "divide") {
-        result /= parseFloat(screen);
-      }
+    // Convert whats on the screen to a float
+    screen = parseFloat(screenStr);
 
+    // If there was a previous operation loaded, operate and evaluate
+    if (prevOp) {
+      screen = this.operate(screen, prevOp, memory);
+    } 
 
-    }
-    data.screen = result;
-    data.result = result;
-    data.curOper = curOper;
-    console.log(data)
+    // Move the screen value into memory, and operation into prevOp
+    memory = screen;
+    prevOp = curOp;
 
+    data.curOp = curOp;
+    data.prevOp = prevOp;
+    data.screen = screen;
+    data.memory = memory;
+    data.screenStr =  '' + screen;
   }
 
   handleOption(data) {
-    let { result, name } = data;
+    let { screenStr, curOp, prevOp, name, memory, screen } = data;
 
-    if (name === "clear") {
-      result = 0;
-    } else if (name === "invert") {
-      result *= -1;
-    } else if (name === "percent") {
-      result /= 100; 
+    if (name === 'clear'){
+      screen = 0;
+      memory = 0;
+      curOp = null;
+      prevOp = null;
+    } else if (name === 'invert'){
+      screen = -parseFloat(screenStr);
+    } else if (name === 'percent'){
+      screen = parseFloat(screenStr)/100;
     }
+  
 
-    data.screen = result;
-    data.result = result;
 
+
+
+    data.screen = screen;
+    data.screenStr = '' + screen;
+    data.memory = memory;
+    data.curOp = curOp;
+    data.prevOp = prevOp;
   }
 
-  setScreen() {
-    let {curOper, screen, result} = this.state;
-    // console.log(screen);
-    screen = parseFloat(screen);
-    // console.log(screen);
-    this.setState({ result, screen, curOper });
+  operate(val1, op, val2) {
+
+    if (op === "plus") {
+      return val1 + val2;
+    } else if (op === "minus") {
+      return val2 - val1;
+    } else if (op === "multiply") {
+      return val1 * val2;
+    } else if (op === "divide") {
+      return val1 / val2;
+    }
+
   }
 
   render() {
     return (
       <div className="calculator">
-        <Screen display={this.state.screen}/>
+        <Screen display={this.state.screenStr}/>
         <Buttons onClick={this.handleClick.bind(this)}/>
       </div>
     )
